@@ -8,6 +8,28 @@
   <title>Document</title>
 </head>
 <body>
+  <nav>
+    <div>
+      <ul>
+        {% if user.is_authenticated %}
+          <div class="logout_div mt-2">
+            <ul class="underline-hover list-unstyled d-flex">
+              <li class="logout_text me-3"><a class="text-decoration-none" href="{% url 'articles:home' %}"><span>홈</span></a></li>
+              <li class="logout_text"><a class="text-decoration-none" href="{% url 'accounts:logout' %}"><span>로그아웃</span></a></li>
+            </ul>
+          </div>
+        {% else %}
+          <div class="login_div mt-2">
+            <ul class="underline-hover list-unstyled d-flex">
+              <li class="logout_text me-3"><a class="text-decoration-none" href="{% url 'articles:home' %}"><span>홈</span></a></li>
+              <li class="login_text me-3"><a class="text-decoration-none" href="{% url 'accounts:login' %}"><span>로그인</span></a></li>
+              <li class="login_text"><a class="text-decoration-none" href="{% url 'accounts:signup' %}"><span>회원가입</span></a></li>
+            </ul>
+          </div>
+        {% endif %}
+      </ul>
+    </div>
+  </nav>
   <div class="container">
     {% block content %}
     {% endblock content %}

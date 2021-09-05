@@ -1,5 +1,7 @@
+from django.contrib.auth.models import User
 from articles.models import Article
 from django.shortcuts import render, redirect
+# from . import models
 
 # Create your views here.
 def new(request):
@@ -7,14 +9,17 @@ def new(request):
 
 
 def create(request):
-    title = request.POST.get('title')
-    content = request.POST.get('content')
-    img_path = request.POST.get('img_path')
-
-    article = Article(title=title, content=content, img_path=img_path)
-    article.save()
-
-    return redirect('articles:detail', article.pk)
+    if request.user.is_authenticated:
+        if request.method == "POST":
+            title = request.POST.get('title')
+            content = request.POST.get('content')
+            user = request.user
+            img_path = request.POST.get('img_path')
+            article = Article(title=title, content=content, user=user, img_path=img_path)
+            article.save()
+            return redirect('articles:detail', article.pk)
+    else:
+        return redirect('accounts:login')
 
 
 def home(request):
@@ -44,11 +49,15 @@ def edit(request, pk):
 def update(request, pk):
     article = Article.objects.get(pk=pk)
     if request.method == 'POST':
-        article.title = request.POST.get('title')
-        article.content = request.POST.get('content')
-        article.img_path = request.POST.get('img_path')
-        article.save()
-        return redirect('articles:detail', article.pk)
+        if article.user == request.user:
+            article.title = request.POST.get('title')
+            article.content = request.POST.get('content')
+            article.user = request.user
+            article.img_path = request.POST.get('img_path')
+            article.save()
+            return redirect('articles:detail', article.pk)
+        else:
+            return redirect('articles:detail', article.pk)
     else:
         return redirect('articles:detail', article.pk)
 
@@ -56,7 +65,10 @@ def update(request, pk):
 def delete(request, pk):
     article = Article.objects.get(pk=pk)
     if request.method == 'POST':
-        article.delete()
-        return redirect('articles:home')
+        if article.user == request.user:
+            article.delete()
+            return redirect('articles:home')
+        else:
+            return redirect('articles:detail', article.pk)
     else:
         return redirect('articles:detail', article.pk)

@@ -1,26 +1,28 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<h1 class="fw-bold">NEW</h1>
-<form action="{% url 'articles:create' %}" method="POST">
-  {% csrf_token %}
-  <div>
-    <label class="mt-3" for="title">TITLE: </label>
-    <br>
-    <input type="text", id="title" name="title">
-  </div>
-  <div>
-    <label class="mt-3" for="content">CONTENT: </label>
-    <br>
-    <textarea id="content" name="content" cols="30" rows="10"></textarea>
-    <br>
-  </div>
-  <div>
-    <label for="img_path">IMG_PATH: </label>
-    <br>
-    <input type="text" name="img_path" id="img_path">
-  </div>
-  <input class="mt-3 me-3" type="submit" value="등록">
-  <input class="fw-light" type="button" value="뒤로" onclick="location.href='{% url 'articles:home' %}'">
-</form>
+<div class="wrapper" style="text-align: center;">
+  <h1 class="fw-bold">NEW</h1>
+  <form action="{% url 'articles:create' %}" method="POST">
+    {% csrf_token %}
+    <div>
+      <label class="mt-3" for="title">제목: </label>
+      <br>
+      <input type="text", id="title" name="title">
+    </div>
+    <div>
+      <label class="mt-3" for="content">내용: </label>
+      <br>
+      <textarea id="content" name="content" cols="30" rows="10"></textarea>
+      <br>
+    </div>
+    <div>
+      <label for="img_path">이미지 경로: </label>
+      <br>
+      <input type="text" name="img_path" id="img_path">
+    </div>
+    <input class="mt-3 me-3" type="submit" value="등록">
+    <input class="fw-light" type="button" value="뒤로" onclick="location.href='{% url 'articles:home' %}'">
+  </form>
+</div>
 {% endblock %}
