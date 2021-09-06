@@ -25,5 +25,9 @@
     {% endfor %}
   </tbody>
 </table>
-<input type="button" value="쓰기" onclick="location.href='{% url 'articles:new' %}'"> 
+{% if user.is_authenticated %}
+  <input type="button" value="쓰기" onclick="location.href='{% url 'articles:new' %}'"> 
+{% else %}
+  <input type="button" value="쓰기" onclick="location.href='{% url 'accounts:login' %}'">
+{% endif %}
 {% endblock content %}

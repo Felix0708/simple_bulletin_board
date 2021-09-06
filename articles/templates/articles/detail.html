@@ -23,12 +23,16 @@
       </tr>
     </tbody>
   </table>
+  {% if article.user == request.user %}
   <div class="d-inline-flex">
     <input class="me-3" type="button" value="수정" onclick="location.href='{% url 'articles:edit' article.pk %}'">
     <form class="me-2" action="{% url 'articles:delete' article.pk %}" method="POST">
       {% csrf_token %}
-      <input class="me-2" type="submit" value="삭제">
+      <input type="submit" value="삭제">
     </form>
-    <input type="button" value="뒤로" onclick="location.href='{% url 'articles:home' %}'">
   </div>
+  <input class="ms-1" type="button" value="뒤로" onclick="location.href='{% url 'articles:home' %}'">
+  {% else %}
+  <input class="ms-1" type="button" value="뒤로" onclick="location.href='{% url 'articles:home' %}'">
+  {% endif %}
 {% endblock %}

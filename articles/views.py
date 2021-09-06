@@ -1,25 +1,43 @@
 from django.contrib.auth.models import User
 from articles.models import Article
 from django.shortcuts import render, redirect
-# from . import models
+from django import forms
+from articles.forms import ArticleForm
+
 
 # Create your views here.
 def new(request):
-    return render(request, 'articles/new.html')
+    form = ArticleForm()
+    context = {
+        'form': form,
+    }
+    return render(request, 'articles/new.html', context)
 
 
 def create(request):
-    if request.user.is_authenticated:
-        if request.method == "POST":
-            title = request.POST.get('title')
-            content = request.POST.get('content')
-            user = request.user
-            img_path = request.POST.get('img_path')
-            article = Article(title=title, content=content, user=user, img_path=img_path)
-            article.save()
-            return redirect('articles:detail', article.pk)
-    else:
-        return redirect('accounts:login')
+    form = ArticleForm(request.POST)
+    #유효성 검사
+    if form.is_valid():
+        article = form.save()
+        article.user = request.user
+        article.save()
+        return redirect('articles:detail', article.pk)
+    return redirect('articles:new')
+
+
+    # # if request.user.is_authenticated:
+    # if request.method == "POST":
+    #     title = request.POST.get('title')
+    #     content = request.POST.get('content')
+    #     user = request.user
+    #     img_path = request.POST.get('img_path')
+    #     article = Article(title=title, content=content, user=user, img_path=img_path)
+    #     article.save()
+    #     return redirect('articles:detail', article.pk)
+    # # else:
+    # #     return redirect('accounts:login')
+    # else:
+    #     return redirect('articles:home')
 
 
 def home(request):
