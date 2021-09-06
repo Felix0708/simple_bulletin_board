@@ -26,7 +26,7 @@
   </tbody>
 </table>
 {% if user.is_authenticated %}
-  <input type="button" value="쓰기" onclick="location.href='{% url 'articles:new' %}'"> 
+  <input type="button" value="쓰기" onclick="location.href='{% url 'articles:create' %}'"> 
 {% else %}
   <input type="button" value="쓰기" onclick="location.href='{% url 'accounts:login' %}'">
 {% endif %}

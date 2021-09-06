@@ -25,7 +25,7 @@
   </table>
   {% if article.user == request.user %}
   <div class="d-inline-flex">
-    <input class="me-3" type="button" value="수정" onclick="location.href='{% url 'articles:edit' article.pk %}'">
+    <input class="me-3" type="button" value="수정" onclick="location.href='{% url 'articles:update' article.pk %}'">
     <form class="me-2" action="{% url 'articles:delete' article.pk %}" method="POST">
       {% csrf_token %}
       <input type="submit" value="삭제">
