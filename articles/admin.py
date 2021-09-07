@@ -1,4 +1,3 @@
-from articles.models import Article
 from django.contrib import admin
 from .models import Article
 

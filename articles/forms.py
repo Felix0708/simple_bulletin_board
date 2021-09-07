@@ -10,7 +10,7 @@ class ArticleForm(forms.ModelForm):
                 'class': 'my-title',
                 'placeholder': '제목을 입력하세요.',
                 'maxlength': 20,
-                'style' : 'border: solid 2px #D2691E; border-radius: 8px;'
+                'style' : 'border: solid 2px gray; border-radius: 8px; width: 25rem;'
             }
         ),
         error_messages={
@@ -24,8 +24,8 @@ class ArticleForm(forms.ModelForm):
                 'class': 'my-content',
                 'placeholder': '내용을 입력하세요.',
                 'rows': 5,
-                'cols': 50,
-                'style': 'border: solid 2px #D2691E; border-radius: 8px;'
+                'cols': 52,
+                'style': 'border: solid 2px gray; border-radius: 8px;'
             }
         ),
         error_messages={
@@ -36,4 +36,3 @@ class ArticleForm(forms.ModelForm):
     class Meta:
         model = Article
         fields =  ('title', 'content',)
-        

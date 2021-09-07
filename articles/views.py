@@ -23,7 +23,7 @@ def create(request):
     context = {
         'form': form,
     }
-    return render(request, 'articles/create.html', context)
+    return render(request, 'articles/form.html', context)
 
 
 @require_safe
@@ -62,7 +62,7 @@ def update(request, pk):
         'article': article,
         'form': form
     }
-    return render(request, 'articles/update.html', context)
+    return render(request, 'articles/form.html', context)
 
 
 @require_POST

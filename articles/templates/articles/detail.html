@@ -18,21 +18,20 @@
         <td>{{ article.title }}</td>
         <td>{{ article.content }}</td>
         <td>{{ article.user }}</td>
-        <td><img style="width: 200px;
-  height: 200px;" src="{{ article.img_path }}" alt="img"/></td>
+        <td><img style="width: 200px; height: 200px;" src="{{ article.img_path }}" alt="img"/></td>
       </tr>
     </tbody>
   </table>
   {% if article.user == request.user %}
   <div class="d-inline-flex">
-    <input class="me-3" type="button" value="수정" onclick="location.href='{% url 'articles:update' article.pk %}'">
+    <a class="me-3" href="{% url 'articles:update' article.pk %}"><button class="btn btn-warning">수정</button></a>
     <form class="me-2" action="{% url 'articles:delete' article.pk %}" method="POST">
       {% csrf_token %}
-      <input type="submit" value="삭제">
+      <button class="btn btn-danger">삭제</button>
     </form>
   </div>
-  <input class="ms-1" type="button" value="뒤로" onclick="location.href='{% url 'articles:home' %}'">
+  <a href="{% url 'articles:home' %}"><button class="btn btn-dark">BACK</button></a>
   {% else %}
-  <input class="ms-1" type="button" value="뒤로" onclick="location.href='{% url 'articles:home' %}'">
+  <a href="{% url 'articles:home' %}"><button class="btn btn-dark">BACK</button></a>
   {% endif %}
 {% endblock %}
