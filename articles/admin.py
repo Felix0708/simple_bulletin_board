@@ -3,8 +3,6 @@ from .models import Article
 
 # Register your models here.
 class ArticleAdmin(admin.ModelAdmin):
-    list_display = ('pk', 'title', 'content', 'user',)
+    list_display = ('pk', 'title', 'content',)
 
-
-# admin site에 register 하겠다.
-admin.site.register(Article, ArticleAdmin)
+admin.site.register(Article)

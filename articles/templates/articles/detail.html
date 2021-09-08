@@ -1,37 +1,25 @@
 {% extends 'base.html' %}
+{% load static %}
 
 {% block content %}
-  <h1 class="fw-bold text-center my-3">DETAIL</h1>
-  <table class="table table-hover">
-    <thead>
-      <tr class="text-center">
-        <th scope="col">번호</th>
-        <th scope="col">제목</th>
-        <th scope="col">내용</th>
-        <th scope="col">작성자</th>
-        <th scope="col">이미지</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr class="text-center">
-        <th scope="row">{{ article.pk }}</th>
-        <td>{{ article.title }}</td>
-        <td>{{ article.content }}</td>
-        <td>{{ article.user }}</td>
-        <td><img style="width: 200px; height: 200px;" src="{{ article.img_path }}" alt="img"/></td>
-      </tr>
-    </tbody>
-  </table>
-  {% if article.user == request.user %}
-  <div class="d-inline-flex">
-    <a class="me-3" href="{% url 'articles:update' article.pk %}"><button class="btn btn-warning">수정</button></a>
-    <form class="me-2" action="{% url 'articles:delete' article.pk %}" method="POST">
-      {% csrf_token %}
-      <button class="btn btn-danger">삭제</button>
-    </form>
-  </div>
-  <a href="{% url 'articles:home' %}"><button class="btn btn-dark">BACK</button></a>
+  <h2>DETAIL</h2>
+  <h3>{{ article.pk }} 번째 글</h3>
+  <hr>
+  <p>제목 : {{ article.title }}</p>
+  <p>내용 : {{ article.content }}</p>
+  <p>작성시각 : {{ article.created_at }}</p>
+  <p>수정시각 : {{ article.updated_at }}</p>
+  <hr>
+  {% if article.image %}
+    <img src="{{ article.image_thumbnail.url }}" alt="{{ article.image_thumbnail }}">
   {% else %}
-  <a href="{% url 'articles:home' %}"><button class="btn btn-dark">BACK</button></a>
+    <img src="{% static 'images/default.jpg' %}" alt="default image">
   {% endif %}
-{% endblock %}
+  <hr>
+  <a href="{% url 'articles:update' article.pk %}">[UPDATE]</a>
+  <form action="{% url 'articles:delete' article.pk %}" method="POST">
+    {% csrf_token %}
+    <button>DELETE</button>
+  </form>
+  <a href="{% url 'articles:index' %}">[back]</a>
+{% endblock content %}
