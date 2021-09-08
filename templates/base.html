@@ -14,6 +14,28 @@
     <img style="position:absolute; top:0; left:0; right:0; bottom:0; margin:auto; min-width:50%; min-height:50%;" src="{% static 'images/sample.png' %}" alt="sample image">
   </div>
   <div class="container">
+    {% if request.user.is_authenticated %}
+      <div class="d-flex justify-content-between mt-2">
+        <h5 class="me-2">{{ request.user }}님, 안녕하세요</h5>
+        <div class="d-flex">
+          <a class="me-2" href="{% url 'articles:index' %}"><button class="btn btn-sm p-0">홈</button></a>
+          <a class="me-2" href="{% url 'accounts:update' %}"><button class="btn btn-sm p-0">회원정보수정</button></a>
+          <form class="me-2" action="{% url 'accounts:logout' %}" method="POST">
+            {% csrf_token %}
+            <button class="btn btn-sm p-0">로그아웃</button>
+          </form>
+          <form class="me-2" action="{% url 'accounts:delete' %}" method="POST">
+            {% csrf_token %}
+            <button class="btn btn-sm p-0">회원탈퇴</button>
+          </form>
+        </div>
+      </div>
+    {% else %}
+      <div class="d-flex mt-2">
+        <a class="me-2" href="{% url 'accounts:login' %}"><button class="btn btn-sm p-0">로그인</button></a>
+        <a href="{% url 'accounts:signup' %}"><button class="btn btn-sm p-0">회원가입</button></a>
+      </div>
+    {% endif %}
     {% block content %}
     {% endblock content %}
   </div>

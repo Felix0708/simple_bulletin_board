@@ -1,27 +1,31 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<h1 class="fw-bold text-center my-4">INDEX</h1>
-<br>
-<table class="table table-hover">
-  <thead>
-    <tr>
-      <th scope="col">번호</th>
-      <th scope="col">제목</th>
-      <th scope="col">내용</th>
-      <th scope="col">상세 보기</th>
-    </tr>
-  </thead>
-  <tbody>
-    {% for article in articles %}
+  <h1 class="fw-bold text-center my-4">INDEX</h1>
+  <br>
+  <table class="table table-hover">
+    <thead>
       <tr>
-        <th scope="row">{{ article.pk }}</th>
-        <td>{{ article.title }}</td>
-        <td>{{ article.content }}</td>
-        <td><a class="text-decoration-none" href="{% url 'articles:detail' article.pk %}">DETAIL</a></td>
+        <th scope="col">번호</th>
+        <th scope="col">제목</th>
+        <th scope="col">내용</th>
+        <th scope="col">상세 보기</th>
       </tr>
-    {% endfor %}
-  </tbody>
-</table>
-<a href="{% url 'articles:create' %}"><button class="btn btn-primary">쓰기</button></a>
+    </thead>
+    <tbody>
+      {% for article in articles %}
+        <tr>
+          <th scope="row">{{ article.pk }}</th>
+          <td>{{ article.title }}</td>
+          <td>{{ article.content }}</td>
+          <td><a class="text-decoration-none" href="{% url 'articles:detail' article.pk %}">DETAIL</a></td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  {% if request.user.is_authenticated %}
+    <a href="{% url 'articles:create' %}"><button class="btn btn-primary">쓰기</button></a>
+  {% else %}
+    <a href="{% url 'accounts:login' %}"><button class="btn btn-primary">쓰기</button></a>
+  {% endif %}
 {% endblock content %}

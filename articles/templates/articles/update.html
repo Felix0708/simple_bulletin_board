@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<div style="text-align: center;" class="mt-5">
+<div style="text-align: center;" class="mt-4">
   <h1 class="fw-bold mb-4">UPDATE</h1>
   <form enctype="multipart/form-data" action="{% url 'articles:update' article.pk %}" method="POST">
     {% csrf_token %}

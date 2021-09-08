@@ -24,7 +24,7 @@ class ArticleForm(forms.ModelForm):
                 'class': 'my-content',
                 'placeholder': '내용을 입력하세요.',
                 'rows': 5,
-                'cols': 52,
+                'cols': 54,
                 'style': 'border: solid 2px gray; border-radius: 8px;'
             }
         ),
@@ -35,4 +35,4 @@ class ArticleForm(forms.ModelForm):
     
     class Meta:
         model = Article
-        fields = '__all__'
+        exclude = ['user',]
