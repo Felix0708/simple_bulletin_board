@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.views.decorators.http import require_http_methods, require_POST, require_safe
-from .models import Article
-from .forms import ArticleForm
+from .models import Article, Comment
+from .forms import ArticleForm, CommentForm
 from django.contrib.auth.decorators import login_required
 
 # Create your views here.
@@ -19,7 +19,6 @@ def index(request):
 def create(request):
     if request.method == 'POST':
         form = ArticleForm(request.POST, request.FILES)
-        print(request.user)
         if form.is_valid():
             article = form.save()
             article.user = request.user
@@ -36,8 +35,10 @@ def create(request):
 @require_safe
 def detail(request, pk):
     article = get_object_or_404(Article, pk=pk)
+    comment_form = CommentForm()
     context = {
         'article': article,
+        'comment_form': comment_form
     }
     return render(request, 'articles/detail.html', context)
 
@@ -46,7 +47,8 @@ def detail(request, pk):
 def delete(request, pk):
     if request.user.is_authenticated:
         article = get_object_or_404(Article, pk=pk)
-        article.delete()
+        if article.user.username == request.user.username:
+            article.delete()
     return redirect('articles:index')
 
 
@@ -54,15 +56,63 @@ def delete(request, pk):
 @require_http_methods(['GET', 'POST'])
 def update(request, pk):
     article = get_object_or_404(Article, pk=pk)
+    if article.user.username == request.user.username:
+        if request.method == 'POST':
+            form = ArticleForm(request.POST, request.FILES, instance=article)
+            if form.is_valid():
+                form.save()
+                return redirect('articles:detail', article.pk)
+        else:
+            form = ArticleForm(instance=article)
+        context = {
+            'article': article,
+            'form': form,
+        }
+        return render(request, 'articles/update.html', context)
+
+
+@login_required
+@require_http_methods(['GET', 'POST'])
+def comment_create(request, article_pk):
     if request.method == 'POST':
-        form = ArticleForm(request.POST, request.FILES, instance=article)
-        if form.is_valid():
-            form.save()
-            return redirect('articles:detail', article.pk)
+        comment_form = CommentForm(request.POST)
+        if comment_form.is_valid():
+            comment = comment_form.save(commit=False)
+            comment.user = request.user
+            comment.article_id = article_pk
+            comment.save()
+            return redirect('articles:detail', article_pk)
     else:
-        form = ArticleForm(instance=article)
+        comment_form = CommentForm()
     context = {
-        'article': article,
-        'form': form,
+        'comment_form': comment_form,
     }
-    return render(request, 'articles/update.html', context)
+    return render(request, 'articles/detail.html', context)
+
+
+@require_POST
+def comment_delete(request, article_pk, pk):
+    if request.user.is_authenticated:
+        comment = get_object_or_404(Comment, pk=pk)
+        if comment.user.username == request.user.username:
+            comment.delete()
+    return redirect('articles:detail', article_pk)
+
+
+@require_http_methods(['GET', 'POST'])
+def comment_edit(request, article_pk, pk):
+    article = get_object_or_404(Article, pk=article_pk)
+    comment = get_object_or_404(Comment, pk=pk)
+    if comment.user.username == request.user.username:
+        if request.method == 'POST':
+            form = CommentForm(request.POST, instance=comment) 
+            if form.is_valid():
+                comment = form.save()
+                return redirect('articles:detail', article_pk)
+        else : 
+            form = CommentForm(instance=comment)
+        context ={
+            'article': article,
+            'form' : form,
+        }
+        return render(request,'articles/comment_edit.html', context)

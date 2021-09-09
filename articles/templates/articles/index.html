@@ -6,19 +6,19 @@
   <table class="table table-hover">
     <thead>
       <tr>
-        <th scope="col">번호</th>
-        <th scope="col">제목</th>
-        <th scope="col">내용</th>
-        <th scope="col">상세 보기</th>
+        <th scope="col-2">번호</th>
+        <th scope="col-6">제목</th>
+        <th scope="col-2">작성자</th>
+        <th scope="col-2"></th>
       </tr>
     </thead>
     <tbody>
       {% for article in articles %}
         <tr>
           <th scope="row">{{ article.pk }}</th>
-          <td>{{ article.title }}</td>
-          <td>{{ article.content }}</td>
-          <td><a class="text-decoration-none" href="{% url 'articles:detail' article.pk %}">DETAIL</a></td>
+          <td><a class="text-decoration-none" href="{% url 'articles:detail' article.pk %}">{{ article.title }}</a></td>
+          <td>{{ article.user }}</td>
+          <td>{{ article.created_at.time }}</td>
         </tr>
       {% endfor %}
     </tbody>

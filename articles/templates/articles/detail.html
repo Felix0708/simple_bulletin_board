@@ -19,6 +19,35 @@
     {% endif %}
   </div>
   <hr>
+  <p class="fw-bold">댓글 목록 ({{ article.comment_set.all|length }})</p>
+  <ul class="p-0">
+    {% for comment in article.comment_set.all %}
+      <li class="list-unstyled">
+      {{ comment.user }}
+      <div class="d-flex">
+        {{ comment.content }}   -   {{ comment.created_at.time }}
+        {% if comment.user == request.user %}
+          <a class="text-decoration-none ms-3" href="{% url 'articles:comment_edit' article.pk comment.pk %}"><button class="btn btn-link p-0 text-decoration-none"><p class="fs-6">수정</p></button></a>
+          <form action="{% url 'articles:comment_delete' article.pk comment.pk %}" method = "POST">
+              {% csrf_token %}
+              <button class="btn btn-link ms-2 p-0 text-decoration-none"><p class="fs-6">삭제</p></button>
+          </form>
+        </div>
+      {% endif %}
+      </li>
+    {% empty %}
+      작성된 댓글이 없습니다.
+    {% endfor %}
+  </ul>
+  {% if request.user.is_authenticated %}
+  <p class="fw-bold">댓글 입력</p>
+  <form action="{% url 'articles:comment_create' article.pk %}" method="POST">
+    {% csrf_token %}
+    {{ comment_form.content }}
+    <button class="btn btn-primary ms-2 p-0">등록</button>
+  </form>
+  {% endif %}
+  <hr>
   {% if request.user == article.user %}
     <div class="d-flex my-3">
       <a class="me-3" href="{% url 'articles:update' article.pk %}"><button class="btn btn-primary">수정</button></a>
