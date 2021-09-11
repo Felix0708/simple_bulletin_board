@@ -2,8 +2,12 @@
 
 {% block content %}
 <div style="text-align: center;" class="mt-4">
-  <h1 class="fw-bold mb-4">CREATE</h1>
-  <form enctype="multipart/form-data" action="{% url 'articles:create' %}" method="POST">
+  {% if request.resolver_match.url_name == 'create' %}
+    <h1 class="fw-bold mb-4">CREATE</h1>
+  {% else %}
+    <h1 class="fw-bold mb-4">UPDATE</h1>
+  {% endif %}
+  <form action="" method="POST" enctype="multipart/form-data">
     {% csrf_token %}
     <div>
       <p class="mb-2">제목</p>
@@ -22,6 +26,6 @@
       <button class="btn btn-primary me-4">등록</button>
     </div>
   </form>
-  <a class="position-absolute mt-4" href="{% url 'articles:index' %}"><button class="btn btn-dark">BACK</button></a>
+  <a class="position-absolute mt-4" href="{% url 'articles:index' %}"><button class="btn btn-dark">뒤로</button></a>
 </div>
 {% endblock content %}

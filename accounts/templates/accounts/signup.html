@@ -4,7 +4,23 @@
   <h1>회원가입</h1>
   <form action="" method='POST'>
     {% csrf_token %}
-    {{ form.as_p }}
+    {{ form.username }}
+    {{ form.password1 }}
+    {{ form.password2 }}
     <input type="submit">
   </form>
 {% endblock content %}
+
+{% comment %} {% extends 'base.html' %}
+
+{% block content %}
+  <h1>회원가입</h1>
+  <form action="" method='POST'>
+    {% csrf_token %}
+    {{ form.as_p }}
+    <input type="submit">
+  </form>
+{% endblock content %} {% endcomment %}
+
+
+

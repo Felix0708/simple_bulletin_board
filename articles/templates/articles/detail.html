@@ -41,10 +41,10 @@
   </ul>
   {% if request.user.is_authenticated %}
   <p class="fw-bold">댓글 입력</p>
-  <form action="{% url 'articles:comment_create' article.pk %}" method="POST">
+  <form class="pb-0" action="{% url 'articles:comment_create' article.pk %}" method="POST">
     {% csrf_token %}
     {{ comment_form.content }}
-    <button class="btn btn-primary ms-2 p-0">등록</button>
+    <button class="btn btn-primary ms-2 p-0 mb-3">등록</button>
   </form>
   {% endif %}
   <hr>

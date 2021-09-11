@@ -3,13 +3,17 @@ from django.views.decorators.http import require_http_methods, require_POST, req
 from .models import Article, Comment
 from .forms import ArticleForm, CommentForm
 from django.contrib.auth.decorators import login_required
+from django.core.paginator import Paginator
 
 # Create your views here.
 @require_safe
 def index(request):
     articles = Article.objects.order_by('-pk')
+    paginator = Paginator(articles, 7)
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
     context = {
-        'articles': articles,
+        'page_obj': page_obj,
     }
     return render(request, 'articles/index.html', context)
 
@@ -29,7 +33,7 @@ def create(request):
     context = {
         'form': form,
     }
-    return render(request, 'articles/create.html', context)
+    return render(request, 'articles/form.html', context)
 
 
 @require_safe
@@ -68,7 +72,7 @@ def update(request, pk):
             'article': article,
             'form': form,
         }
-        return render(request, 'articles/update.html', context)
+        return render(request, 'articles/form.html', context)
 
 
 @login_required

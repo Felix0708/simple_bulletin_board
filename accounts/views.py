@@ -49,7 +49,7 @@ def signup(request):
 
 @require_POST
 def delete(request):
-    if request.user.is_autheticated:
+    if request.user.is_authenticated:
         request.user.delete()
         auth_logout(request)
     return redirect('articles:index')
