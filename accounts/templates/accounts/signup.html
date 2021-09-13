@@ -1,14 +1,44 @@
 {% extends 'base.html' %}
 
 {% block content %}
-  <h1>회원가입</h1>
-  <form action="" method='POST'>
-    {% csrf_token %}
-    {{ form.username }}
-    {{ form.password1 }}
-    {{ form.password2 }}
-    <input type="submit">
-  </form>
+<div class="mt-4 d-flex justify-content-center">
+  <div>
+    <h1 class="fw-bold text-center">SIGN UP</h1>
+    <div class="ms-5">
+    <form class="ms-3" action="" method='POST'>
+      {% csrf_token %}
+      <div class="mt-5 mb-4">
+        <span >사용자 아이디: </span>
+        {{ form.username }}
+      </div>
+      <ul class="mb-4">
+        <li><p class="m-0">150자 이하의 문자, 숫자 그리고 @/./+/-/_ 만 사용가능합니다.</p></li>
+      </ul>
+      <br>
+      <div class="mb-4">
+        <span>사용자 비밀번호: </span>
+        {{ form.password1 }}
+      </div>
+      <ul class="mb-4">
+        <li class="mb-1"><p class="m-0">다른 개인 정보와 유사한 비밀번호를 사용할 수 없습니다.</p></li>
+        <li class="mb-1"><p class="m-0">통상적으로 자주 사용되는 비밀번호를 사용할 수 없습니다.</p></li>
+        <li class="mb-1"><p class="m-0">숫자로만 이루어진 비밀번호는 사용할 수 없습니다.</p></li>
+        <li class="mb-1"><p class="m-0">비밀번호는 최소 8자 이상이어야 합니다.</p></li>
+      </ul>
+      <br>
+      <div class="mb-4">
+        <span>비밀번호 (확인): </span>
+        {{ form.password2 }}
+      </div>
+      <ul class="mb-4">
+        <li><p class="m-0">확인을 위해 이전과 동일한 비밀번호를 입력하세요.</p></li>
+      </ul>
+      <br>
+      <button style="margin-left: 11rem;" class="btn btn-primary">등록</button>
+    </form>
+    </div>
+  </div>
+</div>
 {% endblock content %}
 
 {% comment %} {% extends 'base.html' %}

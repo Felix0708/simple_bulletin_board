@@ -1,13 +1,23 @@
 {% extends 'base.html' %}
 
 {% block content %}
-  <h1>로그인</h1>
-  <form action="" method='POST'>
-    {% csrf_token %}
-    {{ form.username }}
-    {{ form.password }}
-    <input type="submit">
-  </form>
+  <div style="text-align: center;" class="mt-4">
+    <h1 class="fw-bold">LOGIN</h1>
+    <form action="" method='POST'>
+      {% csrf_token %}
+      <div class="mt-5">
+        <p class="m-0">아이디</p>
+        {{ form.username }}
+      </div>
+      <br>
+      <div class="mb-3">
+        <p class="m-0">비밀번호</p>
+        {{ form.password }}
+      </div>
+      <br>
+      <button class="btn btn-primary">로그인</button>
+    </form>
+  </div>
 {% endblock content %}
 
 

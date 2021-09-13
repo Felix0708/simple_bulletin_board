@@ -1,15 +1,32 @@
 {% extends 'base.html' %}
 
 {% block content %}
-  <h1>회원정보수정</h1>
+<div style="text-align: center;" class="mt-4">
+  <h1 class="fw-bold">UPDATE</h1>
   <form action="" method='POST'>
     {% csrf_token %}
-    {{ form.email }}
-    {{ form.first_name }}
-    {{ form.last_name }}
-    {{ form.id_password }}
-    <input type="submit">
+    <div class="mt-5">
+      <p class="m-0">아이디</p>
+      {{ form.email }}
+    </div>
+    <br>
+    <div>
+      <p class="m-0">성</p>
+      {{ form.last_name }}
+    </div>
+    <br>
+    <div>
+      <p class="m-0">이름</p>
+      {{ form.first_name }}
+    </div>
+    <br>
+    <div>
+      <p class="m-0">패스워드를 변경하려면 <a href="{% url 'accounts:change_password' %}">여기</a>를 클릭하세요</p>
+    </div>
+    <br>
+    <button class="btn btn-primary">수정</button>
   </form>
+</div>
 {% endblock content %}
 
 {% comment %} {% extends 'base.html' %}
