@@ -15,7 +15,7 @@
     {% if article.image %}
       <img src="{{ article.image_thumbnail.url }}" alt="{{ article.image_thumbnail }}">
     {% else %}
-      <img src="{% static 'images/default.jpg' %}" alt="default image">
+      <img style="width: 15rem; height: 15rem;" src="{% static 'images/default.jpg' %}" alt="default image">
     {% endif %}
   </div>
   <hr>

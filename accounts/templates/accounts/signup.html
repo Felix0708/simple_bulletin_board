@@ -4,6 +4,24 @@
 <div class="mt-4 d-flex justify-content-center">
   <div>
     <h1 class="fw-bold text-center">SIGN UP</h1>
+    <div class="ms-5 mt-5">
+      <form action="{% url 'accounts:signup' %}" method="POST">
+        {% csrf_token %}
+        {{  form.as_p }}
+        <br>
+        <button style="margin-left: 16.5rem;" class="btn btn-primary">등록</button>
+      </form>
+    </div>
+  </div>
+</div>
+{% endblock content %}
+
+{% comment %} {% extends 'base.html' %}
+
+{% block content %}
+<div class="mt-4 d-flex justify-content-center">
+  <div>
+    <h1 class="fw-bold text-center">SIGN UP</h1>
     <div class="ms-5">
     <form class="ms-3" action="" method='POST'>
       {% csrf_token %}
@@ -39,7 +57,7 @@
     </div>
   </div>
 </div>
-{% endblock content %}
+{% endblock content %} {% endcomment %}
 
 {% comment %} {% extends 'base.html' %}
 
